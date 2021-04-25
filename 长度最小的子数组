@@ -1,0 +1,25 @@
+class Solution:
+    def minSubArrayLen(self, target: int, nums: List[int]) -> int:
+        
+        # 用双指针实现滑动窗口
+
+        L = len(nums)
+        # i表示前面的指针，p表示后面的指针
+        p = 0
+        s = 0 # 滑动窗口内的和
+
+        ans = 100000
+        for i in range(L):
+            s += nums[i]
+            while s >= target:
+                windowL = i-p+1
+                if windowL < ans:
+                    ans = windowL
+                s -= nums[p]
+                p+=1
+        
+        # print(ans)
+        if ans == 100000:
+            return 0
+        else:
+            return ans
