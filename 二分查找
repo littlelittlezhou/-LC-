@@ -1,0 +1,17 @@
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        
+        left = 0
+        right = len(nums)-1
+
+        while left<=right:
+            # mid = (left+right)//2,用下面求mid是为了防止left+right两个大数相加会溢出的问题
+            mid = left + (right - left) // 2
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] >= target:
+                right = mid-1
+            else:
+                left = mid+1
+            
+        return -1
