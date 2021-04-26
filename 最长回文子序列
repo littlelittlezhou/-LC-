@@ -1,0 +1,24 @@
+class Solution:
+    def longestPalindromeSubseq(self, s: str) -> int:
+
+        # 动态规划问题
+        # dp[i][j]表示s串小标为i和下标为j(i<=j)的字符串的最长回文子序列的长度
+
+        # dp[i][j] = dp[i+1][j-1] + 2 when s[i]=s[j]
+        # dp[i][j] = max(dp[i+1][j], dp[i][j-1]) when s[i]!=s[j]
+
+        # 遍历顺序一定是从下而上从左至右
+        L = len(s)
+        dp = [[0 for _ in range(L)] for _ in range(L)]
+        for i in range(L):
+            dp[i][i] = 1
+
+        for i in range(L-1-1,-1,-1): # 下标范围为[L-1-1,0]
+            for j in range(i+1,L):
+                if s[i] == s[j]:
+                    dp[i][j] = dp[i+1][j-1] + 2
+                else: 
+                    dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+        
+        # print(dp)
+        return dp[0][L-1]
