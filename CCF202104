@@ -1,0 +1,65 @@
+第一题代码：100
+x = list(map(int,input().split()))
+
+n = x[0]
+m = x[1]
+L = x[2]
+
+nums = []
+
+
+for i in range(n):
+    t = list(map(int,input().split()))
+    nums.append(t)
+
+
+
+res = [0] * L
+
+for i in range(n):
+    for j in range(m):
+        res[nums[i][j]] += 1
+
+for i in range(L):
+    print(res[i], end=" ")
+    
+第二题代码：30
+x = list(map(int, input().split()))
+
+n = x[0]
+L = x[1]
+r = x[2]
+t = x[3]
+
+
+nums = []
+
+for i in range(n):
+    tmp = list(map(int,input().split()))
+    nums.append(tmp)
+
+G = [[0 for _ in range(n)] for _ in range(n)]
+
+res = 0
+for i in range(n):
+    for j in range(n):
+        ax = i - r
+        ay = j - r
+        bx = i + r
+        by = j + r
+        s = 0
+        count = 0
+        for ii in range(ax, bx+1):
+            for jj in range(ay, by+1):
+                if 0 <= ii <n and 0<= jj <n:
+                    s += nums[ii][jj]
+                    count += 1
+        G[i][j] = s / count
+        if G[i][j] <= t:
+            res += 1
+
+print(res)
+
+
+        
+实在是太菜了
