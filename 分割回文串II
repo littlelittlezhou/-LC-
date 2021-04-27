@@ -1,0 +1,44 @@
+class Solution:
+    def minCut(self, s: str) -> int:
+
+        # 动态规划，往往回文串dp定义为二维，表示s[i:j]
+        # 但是本题dp定义为一维
+
+        # 存储是否是回文串
+        dp_isPalindromeString = [[0]*len(s) for _ in range(len(s))]
+        for i in range(len(s)):
+            dp_isPalindromeString[i][i] = 1
+        
+        for i in range(len(s)-1-1, -1, -1):
+            for j in range(i+1, len(s)):
+                if s[i] == s[j]:
+                    if j-i==1:
+                        dp_isPalindromeString[i][j] = 1
+                    else:
+                        dp_isPalindromeString[i][j] = dp_isPalindromeString[i+1][j-1]
+        # print("dp_", dp_isPalindromeString)
+
+
+        # dp[i]表示字符串s[0:i](包含第i个)最小分割字符串的分割次数
+        L = len(s)
+        dp = [0] * L
+        
+        for i in range(1,L):
+            flag = 0# 表示没有找到一个回文串
+            val = 2000 # val表示当前dp[i]的最小分割数
+            for j in range(i+1):
+                if dp_isPalindromeString[j][i] == 1:
+                    flag = 1
+                    if j == 0:
+                        val = 0
+                        break
+                    else:
+                        val = min(val, dp[j-1]+1)
+            dp[i] = val
+            # 若没有找到一个回文串，dp[i]直接等于dp[i-1]+1
+            if flag == 0:
+                dp[i] = dp[i-1] + 1
+        # print(dp)
+        
+
+        return dp[-1]
