@@ -1,0 +1,35 @@
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
+        #使用虚拟头结点
+
+        dummyHead = ListNode(val=0)
+        dummyHead.next = head
+
+        fast = dummyHead
+        slow = dummyHead
+
+        # fast首先走n+1步（为什么是n+1），因为若是n的话，当fast指针指向尾结点时，slow正好指向待删除节点，这样实现不了删除待删除节点（一般情况下删除某节点，一般是找到该节点的前一个节点，这样才能删除该节点）
+        pace = n # 我们要明白先走n+1步，但反应在代码上pace=n,不是n+1，但不同的人有不同的实现方式，but都需要重视这个细节
+        while n:
+            fast = fast.next
+            n -= 1
+
+        #同时移动fast、slow指针till fast.next == None
+        while fast.next != None:
+            fast = fast.next
+            slow = slow.next
+        
+        # print(slow.next.val)
+        x = slow.next
+        slow.next = x.next
+        
+        return dummyHead.next
+
+
+
+
